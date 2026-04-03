@@ -1,0 +1,1 @@
+{"version":3,"file":"enviroment.d.ts","sourceRoot":"","sources":["../../src/config/enviroment.ts"],"names":[],"mappings":"AAIA,QAAA,MAAM,MAAM;;gBAE8B,MAAM;eACR,MAAM;cACR,aAAa,GAAG,YAAY;qBAGd,MAAM;wBACA,MAAM;uBACR,MAAM;gBAGpB,MAAM;;CAE/C,CAAC;AAEF,eAAe,MAAM,CAAC;AAEtB,eAAO,MAAM,aAAa,SAAoC,CAAC;AAC/D,eAAO,MAAM,YAAY,SAAmC,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"protect.d.ts","sourceRoot":"","sources":["../../src/middlewares/protect.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,QAAQ,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAKtD,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,mBAAmB,CAAC;AAKrD,QAAA,MAAM,OAAO,GAAU,KAAK,WAAW,EAAE,KAAK,QAAQ,EAAE,MAAM,YAAY,KAAG,OAAO,CAAC,IAAI,CA0BxF,CAAC;AAEF,eAAe,OAAO,CAAC"}
