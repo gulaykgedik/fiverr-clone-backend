@@ -9,45 +9,23 @@ import jwt from "jsonwebtoken";
 
 
 //* kayıt ol
-const register = catchAsync(
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    // 1. Şifreyi hashle
-    const hashedPass: string = bcrypt.hashSync(req.body.password, 12);
+const register = catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  // şifreyi saltla hashle
+  const hashedPass: string = bcrypt.hashSync(req.body.password, 12);
 
-    let imageUrl = "";
+  // yüklenen fotoğrafa eriş
+  const image = await uploadToCloud(next, req.file!.path, "8-avatars", "image", 200, 200);
 
-    // 2. Eğer dosya varsa Cloudinary'e yükle
-    if (req.file) {
-      try {
-        const image = await uploadToCloud(
-          next,
-          req.file.path,
-          "8-avatars",
-          "image",
-          200,
-          200
-        );
+  // kullanıcıyı veritabanına kaydet
+  const newUser = await User.create({
+    ...req.body,
+    password: hashedPass,
+    profilePicture: image.secure_url,
+  });
 
-        imageUrl = image.secure_url;
-      } catch (err) {
-        return next(err);
-      }
-    }
-
-    // 3. Kullanıcıyı oluştur
-    const newUser = await User.create({
-      ...req.body,
-      password: hashedPass,
-      profilePicture: imageUrl, // boş olabilir (opsiyonel)
-    });
-
-    // 4. Response
-    res.status(201).json({
-      message: "Hesabınız oluşturuldu",
-      user: newUser,
-    });
-  }
-);
+  // client'a cevap gönder
+  res.json({ message: "Hesabınız oluşturuldu", user: newUser });
+});
 
 //* giriş yap
 const login = catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
