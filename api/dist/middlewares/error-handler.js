@@ -5,11 +5,6 @@ const errorHandler = (err, req, res, next) => {
     if (!(err instanceof BaseError)) {
         console.log("❌ Bilinmeyen Hata", err);
         err = new BaseError("Beklenmeyen bir hata oluştu", 500, "INTERNAL_SERVER_ERROR");
-          return res.status(500).json({
-    status: "error",
-    message: err.message,
-    stack: err.stack,
-  });
     }
     // gönderilecek yanıtı hazırla
     const response = {

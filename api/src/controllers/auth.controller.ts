@@ -13,18 +13,33 @@ const register = catchAsync(async (req: Request, res: Response, next: NextFuncti
   // şifreyi saltla hashle
   const hashedPass: string = bcrypt.hashSync(req.body.password, 12);
 
-  // yüklenen fotoğrafa eriş
-  const image = await uploadToCloud(next, req.file!.path, "8-avatars", "image", 200, 200);
+  let imageUrl = "";
 
-  // kullanıcıyı veritabanına kaydet
+  // eğer foto varsa yükle
+  if (req.file) {
+    const image = await uploadToCloud(
+      next,
+      req.file.path,
+      "8-avatars",
+      "image",
+      200,
+      200
+    );
+
+    imageUrl = image.secure_url;
+  }
+
+  // kullanıcıyı oluştur
   const newUser = await User.create({
     ...req.body,
     password: hashedPass,
-    profilePicture: image.secure_url,
+    profilePicture: imageUrl, // boş olabilir
   });
 
-  // client'a cevap gönder
-  res.json({ message: "Hesabınız oluşturuldu", user: newUser });
+  res.json({
+    message: "Hesabınız oluşturuldu",
+    user: newUser,
+  });
 });
 
 //* giriş yap
